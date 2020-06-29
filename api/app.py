@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template, url_for, jsonify
 from flask_cors import CORS
-#from config import Config
 import psycopg2 
-import markdown as md
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -16,7 +14,7 @@ def index():
     if resp:
         return jsonify(resp)
     print("No sql post data")
-    return None
+    return jsonify(list())
 
 @app.route("/posts/<post_id>", methods=["GET"])
 def get_post(post_id):
