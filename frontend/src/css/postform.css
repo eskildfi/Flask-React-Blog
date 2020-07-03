@@ -1,7 +1,36 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    margin: 0 auto;
+    width: 800px;
+    padding: 1em;
+}
+
+form li + li {
+    margin-top: 1em;
+}
+
+label {
+    display: inline-block;
+    text-align: right;
+    width: 60px;
+    padding-right: 1%;
+}
+
 textarea {
+    vertical-align: top;
     resize: none;
     width: 600px;
+    overflow: hidden;
     height: 120px;
     border: 3px solid #cccccc;
-    padding: 5px;
+}
+
+textarea.title {
+    width: 600px;
+    height: 1em;
 }

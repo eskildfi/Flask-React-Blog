@@ -30,19 +30,30 @@ class PostForm extends React.Component {
             // Post is being used to update old posts. Part of the /posts/ pages
             //event.preventDefault();
             fetch(`http://localhost:5000/update/${this.props.id}`, options);
-            this.props.handleClick();
+            this.props.handleClick(this.state.title, this.state.content);
         }
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    Title:
-                    <textarea name="title" value={this.state.title} onChange={this.handleInputChange} />
-                </label>
-                <textarea name="content" value={this.state.content} onChange={this.handleInputChange} />
-                <input type="submit" value="Submit" />
+                <ul>
+                    <li>
+                        <label>
+                            Title:
+                        </label>
+                        <textarea className="title" name="title" value={this.state.title} onChange={this.handleInputChange} />
+                    </li>
+                    <li>
+                        <label>
+                            Content:
+                        </label>
+                        <textarea className="content" name="content" value={this.state.content} onChange={this.handleInputChange} />
+                    </li>
+                    <li>
+                        <input type="submit" value="Submit" />
+                    </li>
+                </ul>
             </form>
         );
     }

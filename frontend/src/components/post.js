@@ -1,6 +1,7 @@
 import React from 'react';
 import PostForm from './postform';
-import {useParams} from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+
 
 class Post extends React.Component {
     constructor(props) {
@@ -20,8 +21,16 @@ class Post extends React.Component {
         .then(data => this.setState({title: data.title, content: data.content}));
     }
 
-    handleClick() {
+    handleClick(title, content) {
         this.setState({showForm: !this.state.showForm});
+        if (title && content) {
+            this.setState(
+                {
+                    title: title,
+                    content: content
+                }
+            );
+        }
     }
 
     render() {
@@ -30,6 +39,7 @@ class Post extends React.Component {
         }
 
         if (this.state.showForm) {
+            console.log(this.state);
             return(
             <PostForm id={this.props.match.params.id} title={this.state.title} content={this.state.content} handleClick={this.handleClick}/>
             );
@@ -37,10 +47,10 @@ class Post extends React.Component {
         return (
             <div className="post">
                 <div className="title">
-                    <p>{this.state.title}</p>
+                    <h1>{this.state.title}</h1>
                 </div>
                 <div className="content">
-                    <p>{this.state.content}</p>
+                    <ReactMarkdown source={this.state.content}/>
                 </div>
                 <button onClick={this.handleClick}>Edit</button>
             </div>

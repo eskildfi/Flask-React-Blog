@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PostForm from './postform';
+import "../css/titlelist.css";
 
 class TitleList extends React.Component {
     constructor(props) {
@@ -16,11 +17,11 @@ class TitleList extends React.Component {
 
     render() {
        const titleList = this.state.titles.map((title) => 
-        <li key={title[0]}><Link to={`/posts/${title[0]}`}>{title[1]}</Link></li>
+        <li className="titlelist" key={title[0]}><Link to={`/posts/${title[0]}`}>{title[1]}</Link></li>
        );
 
        return (
-           <div>
+           <div id="titlelist">
            <PostForm isCreateForm="true" />
            <ul>{titleList}</ul>
            </div>
