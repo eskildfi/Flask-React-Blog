@@ -17,7 +17,7 @@ class TitleList extends React.Component {
 
     render() {
        const titleList = this.state.titles.map((title) => 
-        <li className="titlelist" key={title[0]}><Link to={`/posts/${title[0]}`}>{title[1]}</Link></li>
+        <li className="titlelist" key={title[0]}><Link className="titlelist" to={`/posts/${title[0]}`}>{title[1]}</Link></li>
        );
 
        return (

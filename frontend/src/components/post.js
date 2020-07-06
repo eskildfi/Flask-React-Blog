@@ -1,6 +1,7 @@
 import React from 'react';
 import PostForm from './postform';
 import ReactMarkdown from 'react-markdown';
+import "../css/post.css";
 
 
 class Post extends React.Component {
@@ -34,9 +35,9 @@ class Post extends React.Component {
     }
 
     render() {
-        if (!this.state.title) {
-            return <p></p>;
-        }
+        //if (!this.state.title) {
+            //return <p></p>;
+        //}
 
         if (this.state.showForm) {
             console.log(this.state);
@@ -46,13 +47,13 @@ class Post extends React.Component {
         }
         return (
             <div className="post">
+                <button className="button" onClick={this.handleClick}>Edit</button>
                 <div className="title">
                     <h1>{this.state.title}</h1>
                 </div>
                 <div className="content">
                     <ReactMarkdown source={this.state.content}/>
                 </div>
-                <button onClick={this.handleClick}>Edit</button>
             </div>
         );
     }

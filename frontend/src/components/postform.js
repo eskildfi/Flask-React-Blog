@@ -16,8 +16,10 @@ class PostForm extends React.Component {
         });
     }
 
-    handleSubmit(event) {
-        const data = new FormData(event.target);
+    handleSubmit() {
+        const data = new FormData();
+        data.append("title", this.state.title);
+        data.append("content", this.state.content);
         const options = {
             method: "POST",
             body: data, 
@@ -36,25 +38,25 @@ class PostForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <ul>
-                    <li>
-                        <label>
-                            Title:
-                        </label>
-                        <textarea className="title" name="title" value={this.state.title} onChange={this.handleInputChange} />
-                    </li>
-                    <li>
-                        <label>
-                            Content:
-                        </label>
-                        <textarea className="content" name="content" value={this.state.content} onChange={this.handleInputChange} />
-                    </li>
-                    <li>
-                        <input type="submit" value="Submit" />
-                    </li>
-                </ul>
-            </form>
+            <div className="post">
+                <form onSubmit={this.handleSubmit}>
+                    <ul>
+                        <li>
+                            <label>
+                                Title:
+                            </label>
+                            <textarea className="title" name="title" value={this.state.title} onChange={this.handleInputChange} />
+                        </li>
+                        <li>
+                            <label>
+                                Content:
+                            </label>
+                            <textarea className="content" name="content" value={this.state.content} onChange={this.handleInputChange} />
+                        </li>
+                    </ul>
+                </form>
+                <button className="button" onClick={this.handleSubmit}>Submit</button>
+            </div>
         );
     }
 }

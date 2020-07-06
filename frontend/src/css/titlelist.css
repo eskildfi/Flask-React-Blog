@@ -1,9 +1,12 @@
-#titlelist {
+/*#titlelist {
     margin: auto;
     width: 50%;
-}
+    padding: 1%;
+    height: 100vh;
+    background-color: #f9f5fa;
+}*/
 
-ul {
+ul.titlelist {
     padding: 2%;
 }
 
@@ -13,7 +16,7 @@ li.titlelist {
     border-bottom: solid black 1px;
 }
 
-a {
+a.titlelist {
     text-decoration: none;
     color:black;
     font-size: 2em;

@@ -9,11 +9,14 @@ import {
   Link
 } from 'react-router-dom';
 //import ReactMarkdown from 'react-markdown';
-//import './App.css';
+import './App.css';
 
 function App() {
   return (
     <Router>
+      <div id="head-links">
+        <Link to={'/'}>Home</Link>
+      </div>
       <Switch>
         <Route path="/posts/:id" component={Post} />
         <Route path="/"><TitleList /></Route>
