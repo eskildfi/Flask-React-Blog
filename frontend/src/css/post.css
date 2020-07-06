@@ -7,16 +7,10 @@
 }*/
 
 /* Setter button til høyre av root-div på egen linje */
-/*
 .post .button {
     margin-right: 0;
     margin-left: auto;
     display: block;
-}
-*/
-
-.post .button {
-    float: right;
 }
 
 

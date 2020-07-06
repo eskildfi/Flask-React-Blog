@@ -7,12 +7,19 @@ class TitleList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {titles: []};
+        this.addTitle = this.addTitle.bind(this);
     }
 
     componentDidMount() {
         fetch("http://localhost:5000/")
           .then(res => res.json())
           .then(res => this.setState({titles: res}));
+    }
+    
+    addTitle(title) {
+        var t = this.state.titles.slice();
+        t.unshift([t.length+1, title]);
+        this.setState({titles: t})
     }
 
     render() {
@@ -22,7 +29,7 @@ class TitleList extends React.Component {
 
        return (
            <div id="titlelist">
-           <PostForm isCreateForm="true" />
+           <PostForm isCreateForm="true" addTitle={this.addTitle}/>
            <ul>{titleList}</ul>
            </div>
        );

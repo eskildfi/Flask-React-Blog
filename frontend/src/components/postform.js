@@ -27,6 +27,7 @@ class PostForm extends React.Component {
         if (this.props.isCreateForm) {
             // Form is being used to create new posts
             fetch(`http://localhost:5000/post-article`, options);
+            this.props.addTitle(this.state.title);
         }
         else {
             // Post is being used to update old posts. Part of the /posts/ pages
