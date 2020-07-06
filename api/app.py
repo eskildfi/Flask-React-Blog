@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route("/")
 def index():
-    query = "SELECT post_id, title FROM post ORDER BY post_id"
+    query = "SELECT post_id, title FROM post ORDER BY post_id desc"
     resp = db_query(query, None, resp=True)
     if resp:
         return jsonify(resp)
@@ -45,6 +45,10 @@ def update_post(post_id):
 def post_article():
     title = request.form['title']
     content = request.form['content']
+    if title == "undefined":
+        return ("", 204)
+    if content == "undefined":
+        content = ""
     query = "INSERT INTO post(title, content) VALUES(%(title)s, %(content)s);"
     mapping = {"title": title, "content": content}
     print(f"Title {title} \n Content {title}")
