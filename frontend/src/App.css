@@ -1,12 +1,17 @@
+html {
+    height: 100%;
+}
+
 body {
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 #root {
     margin: auto;
     width: 50%;
     padding: 1%;
-    height: auto;
+    height: 100%;
     background-color: #f9f5fa;
 }
 
@@ -24,8 +29,8 @@ body {
     background-color: #f9f5fa;
 }*/
 
-@media screen and (max-width: 800px) {
-    .post {
+@media screen and (max-width: 900px) {
+    #root {
         width: 100%;
     }
 }
