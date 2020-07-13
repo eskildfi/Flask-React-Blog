@@ -5,5 +5,4 @@ Live: [eskildfi.xyz](http://eskildfi.xyz)
 
 ## TODO:
 * Add users
-* Responsive design
-* Add SSL
+* Improve responsive design
