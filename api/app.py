@@ -40,6 +40,12 @@ def update_post(post_id):
     db_query(query,mapping)
     return ("", 204)
 
+@app.route("/api/delete/<post_id>", methods=["POST"])
+def delete_post(post_id):
+    query = "DELETE FROM post WHERE post_id = %(post_id)s"
+    mapping = {'post_id': post_id}
+    db_query(query,mapping)
+    return ("", 204)
 
 @app.route("/api/post-article", methods=['POST'])
 def post_article():
@@ -53,8 +59,6 @@ def post_article():
     mapping = {"title": title, "content": content}
     print(f"Title {title} \n Content {title}")
     db_query(query,mapping)
-    #return md.markdown(request.form['msg'])
-    #return render_template(f"Title {request.form.title} \n Content {request.form.content}")
     return ("", 204)
 
 def db_query(query,mapping,resp=False):
@@ -74,3 +78,6 @@ def db_query(query,mapping,resp=False):
         if(con):
             cur.close()
             con.close()
+
+if __name__ == "__main__":
+    app.run()
