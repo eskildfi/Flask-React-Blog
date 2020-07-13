@@ -7,7 +7,7 @@ app.config.from_object('config.Config')
 CORS(app)
 
 
-@app.route("/")
+@app.route("/api")
 def index():
     query = "SELECT post_id, title FROM post ORDER BY post_id desc"
     resp = db_query(query, None, resp=True)
@@ -16,7 +16,7 @@ def index():
     print("No sql post data")
     return jsonify(list())
 
-@app.route("/posts/<post_id>", methods=["GET"])
+@app.route("/api/posts/<post_id>", methods=["GET"])
 def get_post(post_id):
     query = "SELECT post_id, title, content FROM post WHERE post_id = %(post_id)s"
     mapping = {"post_id": post_id}
@@ -27,7 +27,7 @@ def get_post(post_id):
     print("SQL request returned empty")
     return {"post_id": -1, "title": -1, "content": -1}
 
-@app.route("/update/<post_id>", methods=["POST"])
+@app.route("/api/update/<post_id>", methods=["POST"])
 def update_post(post_id):
     title = request.form['title']
     content = request.form['content']
@@ -41,7 +41,7 @@ def update_post(post_id):
     return ("", 204)
 
 
-@app.route("/post-article", methods=['POST'])
+@app.route("/api/post-article", methods=['POST'])
 def post_article():
     title = request.form['title']
     content = request.form['content']
