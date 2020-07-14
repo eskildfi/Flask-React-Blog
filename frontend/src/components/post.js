@@ -1,6 +1,7 @@
 import React from 'react';
 import PostForm from './postform';
 import ReactMarkdown from 'react-markdown';
+import { useHistory } from 'react-router-dom';
 import "../css/post.css";
 
 
@@ -13,11 +14,12 @@ class Post extends React.Component {
             content: null
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
         let id = this.props.match.params.id;
-        fetch(`http://localhost:5000/posts/${id}`)
+        fetch(`/api/posts/${id}`)
         .then(res => res.json())
         .then(data => this.setState({title: data.title, content: data.content}));
     }
@@ -34,6 +36,22 @@ class Post extends React.Component {
         }
     }
 
+    handleDelete() {
+        const id = this.props.match.params.id;
+        const options = {
+            method: "POST",
+            headers: new Headers({
+                "Authorization": localStorage.getItem("token"),
+            })
+        }
+        fetch(`/api/delete/${id}`, options)
+        .then(res => {
+            if (res.ok) {
+                this.props.history.goBack();
+            }
+        });
+    }
+
     render() {
         //if (!this.state.title) {
             //return <p></p>;
@@ -48,6 +66,7 @@ class Post extends React.Component {
         return (
             <div className="post">
                 <button className="button" onClick={this.handleClick}>Edit</button>
+                <button className="button" onClick={this.handleDelete}>Delete</button>
                 <div className="title">
                     <h1>{this.state.title}</h1>
                 </div>

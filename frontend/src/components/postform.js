@@ -23,17 +23,27 @@ class PostForm extends React.Component {
         const options = {
             method: "POST",
             body: data, 
+            headers: new Headers({
+                "Authorization": localStorage.getItem("token"),
+            })
         }
         if (this.props.isCreateForm) {
             // Form is being used to create new posts
-            fetch(`http://localhost:5000/post-article`, options);
-            this.props.addTitle(this.state.title);
+            fetch(`/api/post-article`, options)
+            .then(res => {
+                if (res.ok) {
+                    this.props.addTitle(this.state.title);
+                }
+            });
         }
         else {
             // Post is being used to update old posts. Part of the /posts/ pages
-            //event.preventDefault();
-            fetch(`http://localhost:5000/update/${this.props.id}`, options);
-            this.props.handleClick(this.state.title, this.state.content);
+            fetch(`/api/update/${this.props.id}`, options)
+            .then(res => {
+                if (res.ok) {
+                    this.props.handleClick(this.state.title, this.state.content);
+                }
+            });
         }
     }
 

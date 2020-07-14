@@ -6,12 +6,28 @@ import "../css/titlelist.css";
 class TitleList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {titles: []};
+        this.state = {
+            loggedIn: false,
+            titles: []
+        };
         this.addTitle = this.addTitle.bind(this);
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/")
+        const options = {
+            method: "POST",
+            headers: new Headers({
+                "Authorization": localStorage.getItem("token")
+            })
+        }
+        fetch("/api/auth", options)
+        .then(res => {
+            if (res.ok) {
+                this.setState({loggedIn: true});
+            }
+        });
+
+        fetch("/api")
           .then(res => res.json())
           .then(res => this.setState({titles: res}));
     }
@@ -27,10 +43,15 @@ class TitleList extends React.Component {
         <li className="titlelist" key={title[0]}><Link className="titlelist" to={`/posts/${title[0]}`}>{title[1]}</Link></li>
        );
 
+       var postForm = null;
+       if (this.state.loggedIn) {
+           postForm = <PostForm isCreateForm="true" addTitle={this.addTitle}/>
+       }
+
        return (
            <div id="titlelist">
-           <PostForm isCreateForm="true" addTitle={this.addTitle}/>
-           <ul>{titleList}</ul>
+               {postForm}
+                <ul>{titleList}</ul>
            </div>
        );
     }
