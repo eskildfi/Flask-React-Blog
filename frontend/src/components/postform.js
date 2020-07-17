@@ -50,6 +50,7 @@ class PostForm extends React.Component {
     render() {
         return (
             <div className="post">
+                <p style={{textAlign: "center"}}>Use markdown to format text</p>
                 <form onSubmit={this.handleSubmit}>
                     <ul>
                         <li>

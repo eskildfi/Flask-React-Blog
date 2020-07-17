@@ -1,7 +1,7 @@
 import React from 'react';
 import PostForm from './postform';
 import ReactMarkdown from 'react-markdown';
-import { useHistory } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import "../css/post.css";
 
 
@@ -10,6 +10,7 @@ class Post extends React.Component {
         super(props);
         this.state= {
             showForm: false,
+            user: null,
             title: null,
             content: null
         };
@@ -21,7 +22,7 @@ class Post extends React.Component {
         let id = this.props.match.params.id;
         fetch(`/api/posts/${id}`)
         .then(res => res.json())
-        .then(data => this.setState({title: data.title, content: data.content}));
+        .then(data => this.setState({user: data.user_name, title: data.title, content: data.content}));
     }
 
     handleClick(title, content) {
@@ -63,19 +64,31 @@ class Post extends React.Component {
             <PostForm id={this.props.match.params.id} title={this.state.title} content={this.state.content} handleClick={this.handleClick}/>
             );
         }
+
+        var postOpts = null;
+        if (this.props.username && (this.props.username === this.state.user)) {
+            postOpts = <div className="post-options">
+                            <button className="button" onClick={this.handleClick}>Edit</button>
+                            <button className="button" onClick={this.handleDelete}>Delete</button>
+                        </div>
+        }
+
         return (
-            <div className="post">
-                <button className="button" onClick={this.handleClick}>Edit</button>
-                <button className="button" onClick={this.handleDelete}>Delete</button>
-                <div className="title">
-                    <h1>{this.state.title}</h1>
-                </div>
-                <div className="content">
-                    <ReactMarkdown source={this.state.content}/>
+            <div>
+                {postOpts}
+                <div className="post">
+                    <div className="title">
+                        <h1>{this.state.title}</h1>
+                    </div>
+                    <p style={{fontSize:"0.9em"}}><em>Author: {this.state.user}</em></p>
+
+                    <div className="content">
+                        <ReactMarkdown source={this.state.content}/>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default Post;
+export default withRouter(Post);

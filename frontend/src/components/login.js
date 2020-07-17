@@ -1,5 +1,6 @@
 import React from 'react';
-import TitleList from './titlelist';
+import {withRouter} from 'react-router-dom';
+import "../css/login.css";
 
 class Login extends React.Component {
 
@@ -45,6 +46,8 @@ class Login extends React.Component {
             if (data) {
                 console.log(data);
                 localStorage.setItem("token", data.token);
+                this.props.updateUsername();
+                this.props.history.push("/");
             }
         });
     }
@@ -84,12 +87,12 @@ class Login extends React.Component {
 
         var loginFailedText = null
         if (this.state.loginFailed) {
-            loginFailedText = <p>Login failed</p>
+            loginFailedText = <p className="errormsg">Login failed</p>
         }
 
         var registerFailedText = null
         if (this.state.registerFailed) {
-            registerFailedText = <p>Username already in use</p>
+            registerFailedText = <p className="errormsg">User already exists</p>
         }
 
         return (
@@ -97,17 +100,22 @@ class Login extends React.Component {
                 {loginFailedText}
                 {registerFailedText}
                 <form>
-                    <label>Username:</label>
-                    <textarea value={this.state.username} name="username" onChange={this.handleInputChange} />
-                    <label>Password:</label>  
-                    <textarea value={this.state.password} name="password" onChange={this.handleInputChange} />
+                    <ul>
+                        <li>
+                            <label>Username:</label>
+                            <input type="text" value={this.state.username} name="username" onChange={this.handleInputChange} />
+                        </li>
+                        <li>
+                            <label>Password:</label>  
+                            <input type="password" value={this.state.password} className="password" name="password" onChange={this.handleInputChange} />
+                        </li>
+                    </ul>
                 </form>
-                <button className="button" onClick={this.handleLogin}>Login</button>
-                <button className="button" onClick={this.testAuth}>Auth</button>
-                <button className="button" onClick={this.handleRegister}>Register</button>
+                <button onClick={this.handleLogin}>Login</button>
+                <button onClick={this.handleRegister}>Register</button>
             </div>
         )
     }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -7,44 +7,52 @@ class TitleList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false,
             titles: []
         };
         this.addTitle = this.addTitle.bind(this);
     }
 
     componentDidMount() {
-        const options = {
-            method: "POST",
-            headers: new Headers({
-                "Authorization": localStorage.getItem("token")
-            })
+        //const options = {
+            //method: "POST",
+            //headers: new Headers({
+                //"Authorization": localStorage.getItem("token")
+            //})
+        //}
+        //fetch("/api/auth", options)
+        //.then(res => {
+            //if (res.ok) {
+                //this.setState({loggedIn: true});
+            //}
+        //});
+        if (this.props.user) {
+            fetch(`/api/user/${this.props.user}`)
+                .then(res => res.json())
+                .then(res => this.setState({titles: res}));
         }
-        fetch("/api/auth", options)
-        .then(res => {
-            if (res.ok) {
-                this.setState({loggedIn: true});
-            }
-        });
-
+        else {
+            fetch("/api")
+            .then(res => res.json())
+            .then(res => this.setState({titles: res}));
+        }
+    }
+    
+    addTitle(title) {
         fetch("/api")
           .then(res => res.json())
           .then(res => this.setState({titles: res}));
     }
-    
-    addTitle(title) {
-        var t = this.state.titles.slice();
-        t.unshift([t.length+1, title]);
-        this.setState({titles: t})
-    }
 
     render() {
        const titleList = this.state.titles.map((title) => 
-        <li className="titlelist" key={title[0]}><Link className="titlelist" to={`/posts/${title[0]}`}>{title[1]}</Link></li>
+        <li className="titlelist" key={title[1]}>
+            <Link className="titlelist" to={`/posts/${title[1]}`}>{title[2]}</Link>
+            <Link className="profile-link" to={`/user/${title[0]}`}>{title[0]}</Link>
+        </li>
        );
 
        var postForm = null;
-       if (this.state.loggedIn) {
+       if (this.props.username) {
            postForm = <PostForm isCreateForm="true" addTitle={this.addTitle}/>
        }
 

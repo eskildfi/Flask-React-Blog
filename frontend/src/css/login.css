@@ -1,0 +1,8 @@
+.errormsg {
+    font-size: 1.5em;
+    color: red;
+}
+
+textarea {
+    height: 1em;
+}

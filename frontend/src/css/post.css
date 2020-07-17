@@ -13,6 +13,9 @@
     display: block;
 }
 
+.post-options {
+    margin-left: 1em;
+}
 
 .post img {
     max-width: 100%;

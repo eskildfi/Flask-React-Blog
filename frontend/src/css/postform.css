@@ -14,13 +14,6 @@ form li + li {
     margin-top: 1em;
 }
 
-label {
-    display: inline-block;
-    text-align: right;
-    width: 60px;
-    margin-right: 1%;
-}
-
 textarea {
     vertical-align: top;
     resize: none;
@@ -37,4 +30,5 @@ textarea.title {
 
 textarea.content {
     overflow-y: scroll;
+    height: 20em;
 }
