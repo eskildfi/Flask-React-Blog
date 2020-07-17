@@ -4,5 +4,5 @@ Live: [eskildfi.xyz](http://eskildfi.xyz)
 
 
 ## TODO:
-* Add users
 * Improve responsive design
+* Add private posts
