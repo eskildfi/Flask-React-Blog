@@ -12,20 +12,34 @@ CORS(app)
 
 @app.route("/api")
 def index():
-    query = "SELECT post_id, title FROM post ORDER BY post_id desc"
+    query = "SELECT user_name, post_id, title FROM post ORDER BY post_id desc"
     resp = db_query(query, None, resp=True)
     if resp:
         return jsonify(resp)
     print("No sql post data")
     return jsonify(list())
 
+@app.route("/api/user/<username>")
+def user(username):
+    query = """
+            SELECT user_name, post_id, title
+            FROM post
+            WHERE user_name = %(username)s
+            ORDER BY post_id desc
+            """
+    mapping = {"username": username}
+    resp = db_query(query,mapping,resp=True)
+    if resp:
+        return jsonify(resp)
+    return jsonify(list())
+
 @app.route("/api/posts/<post_id>", methods=["GET"])
 def get_post(post_id):
-    query = "SELECT post_id, title, content FROM post WHERE post_id = %(post_id)s"
+    query = "SELECT post_id, title, content, user_name FROM post WHERE post_id = %(post_id)s"
     mapping = {"post_id": post_id}
     resp = db_query(query, mapping, resp=True)
     if resp:
-        dpost = {"post_id": resp[0][0], "title": resp[0][1], "content": resp[0][2]}
+        dpost = {"post_id": resp[0][0], "title": resp[0][1], "content": resp[0][2], "user_name": resp[0][3]}
         return dpost
     print("SQL request returned empty")
     return {"post_id": -1, "title": -1, "content": -1}
