@@ -29,8 +29,12 @@ class Header extends React.Component {
     updateUsername() {
         const token = localStorage.getItem("token");
         if (token) {
-            var tokenSplit = token.split(".");
-            var tokenBody = JSON.parse(atob(tokenSplit[1]));
+            const tokenSplit = token.split(".");
+            const tokenBody = JSON.parse(atob(tokenSplit[1]));
+            if (tokenBody["exp"] > new Date().getTime()) {
+                this.signOut();
+                return;
+            }
             this.setState({username: tokenBody['sub']});
         }
     }
